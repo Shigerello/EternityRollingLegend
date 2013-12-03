@@ -2,6 +2,20 @@
 
 import System.Collections.Generic;
 
+public class DebugTool extends MonoBehaviour
+{
+    static function LogErrorAndExit(message)
+    {
+        // システム由来のLogErrorメッセージと区別するため、文頭を修飾する。
+        Debug.LogError("#DebugTool# " + message);
+        #if UNITY_EDITOR
+            EditorApplication.ExecuteMenuItem("Edit/Pause");
+        #else
+            Application.Quit();
+        #endif
+    }
+}
+
 // Unityコンポーネントとしてアクセスできる変数の必要条件はUnityのObjectクラスを継承していること。C#
 // のDictionaryはそれを満たしていないので、UnityのObjectでラッピングする事で外部にUnityコンポーネン
 // トとして認識させる。
